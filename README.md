@@ -1,0 +1,2 @@
+To compile this assignment, cd into this directory in the terminal and then in the terminal type "javac assignment1.java"
+after compiling, run the program by then typing "java assignment1" in the terminal.
