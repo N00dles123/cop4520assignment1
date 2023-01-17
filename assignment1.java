@@ -64,7 +64,7 @@ public class assignment1 {
         } catch(Exception e){
             System.out.println("Error: " + e);
         }
-
+        /* 
         // test single thread
         long startlinear = System.currentTimeMillis();
 
@@ -92,6 +92,7 @@ public class assignment1 {
         } catch (Exception e){
             System.out.println("Error: " + e);
         }
+        */
     }
     public static boolean isPrime(int n){
         if(n == 2 || n == 3){
