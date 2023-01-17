@@ -64,7 +64,50 @@ public class assignment1 {
         } catch(Exception e){
             System.out.println("Error: " + e);
         }
-        
+
+        // test single thread
+        long startlinear = System.currentTimeMillis();
+
+        PriorityQueue<Integer> top10linear = new PriorityQueue<Integer>(1, Collections.reverseOrder());
+        long sumlinear = 0;
+        int numPrimeslinear = 0;
+        for(int i = 1; i <= a1.max; i++){
+            if(isPrime(i)){
+                numPrimeslinear++;
+                sumlinear += i;
+                top10linear.add(i);
+            }
+        }
+
+        long endlinear = System.currentTimeMillis();
+        try {
+            File write = new File("linear.txt");
+            FileWriter fw = new FileWriter(write);
+            BufferedWriter out = new BufferedWriter(fw);
+            out.write((endlinear - startlinear) + " " + numPrimeslinear + " " + sumlinear + "\n");
+            for(int i = 0; i < 10; i++){
+                out.write(top10linear.poll() + " ");
+            }
+            out.close();
+        } catch (Exception e){
+            System.out.println("Error: " + e);
+        }
+    }
+    public static boolean isPrime(int n){
+        if(n == 2 || n == 3){
+            return true;
+        }
+        if(n <= 1 || n % 2 == 0 || n % 3 == 0){
+            return false;
+        }
+        for(int i = 5; i * i <= n; i += 6){
+            if(n % i == 0 || n % (i + 2) == 0){
+                // false scenario
+                return false;
+            }
+        }
+        // true scenario
+        return true;
     }
 }
 
@@ -81,6 +124,8 @@ class primeThread extends Thread {
             while(curVal.get() < a1.max){
                 if(isPrime(curVal)){
                     a1.numPrimes.incrementAndGet();
+                    a1.top10.add(curVal.get());
+                    a1.sum.addAndGet(curVal.get());
                 }
                 curVal.addAndGet(8);
             }
@@ -98,8 +143,6 @@ class primeThread extends Thread {
     public boolean isPrime(AtomicInteger curVal){
         int current = curVal.get();
         if(current == 2 || current == 3){
-            a1.top10.add(current);
-            a1.sum.addAndGet(current);
             return true;
         }
         if(current <= 1 || current % 2 == 0 || current % 3 == 0){
@@ -111,9 +154,6 @@ class primeThread extends Thread {
                 return false;
             }
         }
-        // true scenario
-        a1.sum.addAndGet(current);
-        a1.top10.add(current);
         return true;
     
         
