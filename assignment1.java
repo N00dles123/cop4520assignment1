@@ -29,14 +29,14 @@ public class assignment1 {
         }
         */
 
-        a1.threads[0] = new primeThread(a1, new AtomicInteger(1));
-        a1.threads[1] = new primeThread(a1, new AtomicInteger(2));
-        a1.threads[2] = new primeThread(a1, new AtomicInteger(3));
-        a1.threads[3] = new primeThread(a1, new AtomicInteger(4));
-        a1.threads[4] = new primeThread(a1, new AtomicInteger(5));
-        a1.threads[5] = new primeThread(a1, new AtomicInteger(6));
-        a1.threads[6] = new primeThread(a1, new AtomicInteger(7));
-        a1.threads[7] = new primeThread(a1, new AtomicInteger(8));
+        a1.threads[0] = new primeThread(a1, 1);
+        a1.threads[1] = new primeThread(a1, 2);
+        a1.threads[2] = new primeThread(a1, 3);
+        a1.threads[3] = new primeThread(a1, 4);
+        a1.threads[4] = new primeThread(a1, 5);
+        a1.threads[5] = new primeThread(a1, 6);
+        a1.threads[6] = new primeThread(a1, 7);
+        a1.threads[7] = new primeThread(a1, 8);
         for(primeThread thread: a1.threads){
             thread.start();
         }
@@ -114,29 +114,29 @@ public class assignment1 {
 
 class primeThread extends Thread {
     assignment1 a1;
-    AtomicInteger curVal;
-    public primeThread(assignment1 a1, AtomicInteger curVal){
+    int curVal;
+    public primeThread(assignment1 a1, int curVal){
         this.a1 = a1; 
         this.curVal = curVal;
     }
 
     public void run(){
         try {
-            while(curVal.get() < a1.max){
+            while(curVal < a1.max){
                 if(isPrime(curVal)){
                     a1.numPrimes.incrementAndGet();
-                    a1.top10.add(curVal.get());
-                    a1.sum.addAndGet(curVal.get());
+                    a1.top10.add(curVal);
+                    a1.sum.addAndGet(curVal);
                 }
-                curVal.addAndGet(8);
+                curVal += 8;
             }
         } catch(Exception e){
             System.out.println("Error: " + e);
         }
     }
     // prime function
-    public boolean isPrime(AtomicInteger curVal){
-        int current = curVal.get();
+    public boolean isPrime(int curVal){
+        int current = curVal;
         if(current == 2 || current == 3){
             return true;
         }
