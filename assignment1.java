@@ -133,13 +133,7 @@ class primeThread extends Thread {
             System.out.println("Error: " + e);
         }
     }
-    /* 
-    public void optimizedPrime(AtomicInteger curVal, assignment1 a1){
-        // assume everything is true
-        int current = curVal.get();
-        for(int i = curVal)
-    }
-   */
+    // prime function
     public boolean isPrime(AtomicInteger curVal){
         int current = curVal.get();
         if(current == 2 || current == 3){
