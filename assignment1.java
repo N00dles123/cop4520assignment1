@@ -6,6 +6,7 @@ import java.io.*;
 // then increment counter by 8 each time a thread executes a prime check 
 // also make use of square root property for primes with function
 // about 20 seconds on java make use of flag principle
+// test out bucket sort technique
 public class assignment1 {
     // shared values and resources
     public int max = 100000000;
@@ -14,7 +15,9 @@ public class assignment1 {
     public AtomicInteger numPrimes = new AtomicInteger(0);
     public AtomicLong sum = new AtomicLong(0);
     public PriorityBlockingQueue<Integer> top10 = new PriorityBlockingQueue<Integer>(1, Collections.reverseOrder());
-    //public AtomicIntegerArray used = new AtomicIntegerArray(max + 1);
+
+    //public List<Integer> top10List = Collections.synchronizedList(new ArrayList<Integer>());
+    public AtomicIntegerArray used = new AtomicIntegerArray(max + 1);
     primeThread threads[] = new primeThread[numThreads];
     Thread t[] = new Thread[numThreads];
     // test Single Thread
@@ -23,9 +26,9 @@ public class assignment1 {
     public static void main(String[] args) {
         assignment1 a1 = new assignment1();
         long start = System.currentTimeMillis();
-        /* 
+        /*
         for(int i = 0; i <= a1.max; i++){
-            a1.used.set(i, 1);
+            a1.used.set(i, 0);
         }
         */
 
@@ -50,16 +53,30 @@ public class assignment1 {
         }
         
         // handle file io stuff
-
+  
         long end = System.currentTimeMillis();
         try {
             File write = new File("primes.txt");
             FileWriter fw = new FileWriter(write);
             BufferedWriter out = new BufferedWriter(fw);
             out.write((end - start) + " " + a1.numPrimes.get() + " " + a1.sum.get() + "\n");
+            /* 
+            // bucket sort technique
+            int index = a1.max;
+            int count = 0;
+            while(count < 10){
+                if(a1.used.get(index) == 1){
+                    out.write(index + " ");
+                    count++;
+                }
+                index--;
+            }
+            */
+            
             for(int i = 0; i < 10; i++){
                 out.write(a1.top10.poll() + " ");
             }
+            
             out.close();
         } catch(Exception e){
             System.out.println("Error: " + e);
@@ -126,6 +143,7 @@ class primeThread extends Thread {
                 if(isPrime(curVal)){
                     a1.numPrimes.incrementAndGet();
                     a1.top10.add(curVal);
+                    //a1.used.set(curVal, 1);
                     a1.sum.addAndGet(curVal);
                 }
                 curVal += 8;
