@@ -153,7 +153,7 @@ class primeThread extends Thread {
     public void run(){
         try {
             while(a1.curVal.get() < a1.max){
-                int cur = a1.curVal.get();
+                int cur = a1.curVal.incrementAndGet();
                 //System.out.println(cur);
                 if(isPrime(cur)){
                     a1.numPrimes.incrementAndGet();
@@ -162,7 +162,6 @@ class primeThread extends Thread {
                     a1.sum.addAndGet(cur);
                 } 
                 //sieve(cur);
-                a1.curVal.incrementAndGet();
             }
         } catch(Exception e){
             System.out.println("Error: " + e);
