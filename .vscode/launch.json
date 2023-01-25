@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch singlethread",
+            "request": "launch",
+            "mainClass": "singlethread",
+            "projectName": "cop4520assignment1_a174e17"
+        },
+        {
+            "type": "java",
+            "name": "Launch test",
+            "request": "launch",
+            "mainClass": "test",
+            "projectName": "cop4520assignment1_a174e17"
+        },
+        {
+            "type": "java",
+            "name": "Launch assignment1",
+            "request": "launch",
+            "mainClass": "assignment1",
+            "projectName": "cop4520assignment1_a174e17"
+        },
+        {
+            "type": "java",
             "name": "Launch test",
             "request": "launch",
             "mainClass": "test",
